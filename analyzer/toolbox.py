@@ -48,6 +48,6 @@ class Toolbox:
         try:
             self._iqr = self._percentile[75] - self._percentile[25]
         except(AttributeError, KeyError):
-            self._percentile(self, data, n = 25)
-            self._percentile(self, data, n = 75)
-            self._iqr(self, data)
+            self.percentile(data, n = 25)
+            self.percentile(data, n = 75)
+            self.iqr(data)

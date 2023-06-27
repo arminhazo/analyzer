@@ -47,16 +47,46 @@ def test_quantile_hasattr():
     assert (test_toolbox._quantile[n] == pytest.approx(1.775))
 
 def test_percentile_nothasattr():
-    pass
+    if hasattr(test_toolbox, "_percentile"):
+        del test_toolbox._percentile
+
+    n = 5
+
+    test_toolbox.percentile(test_data, n)
+    assert (test_toolbox._percentile[n] == pytest.approx(0.55))
+
+    n = 4
+
+    test_toolbox.percentile(test_data, n)
+    assert (test_toolbox._percentile[n] == pytest.approx(0.44))
 
 def test_percentile_hasattr():
-    pass
+    if not hasattr(test_toolbox, "_percentile"):
+        test_toolbox._percentile = {}
 
-def test_iqr_nothasattr():
-    pass
+    n = 5
+
+    test_toolbox.percentile(test_data, n)
+    assert (test_toolbox._percentile[n] == pytest.approx(0.55))
+
+    n = 4
+
+    test_toolbox.percentile(test_data, n)
+    assert (test_toolbox._percentile[n] == pytest.approx(0.44))
+
+def test_iqr_nothasattr_haskey():
+    if hasattr(test_toolbox, "_iqr"):
+        del test_toolbox._iqr
+
+    test_toolbox.percentile(test_data, n=75)
+    test_toolbox.percentile(test_data, n=25)
+
+    test_toolbox.iqr(test_data)
+    assert (test_toolbox._iqr == pytest.approx(4.775))
 
 def test_iqr_nothaskey():
-    pass
+    if hasattr(test_toolbox, "_percentile"):
+        del test_toolbox._percentile
 
-def test_iqr_haskey():
-    pass
+    test_toolbox.iqr(test_data)
+    assert (test_toolbox._iqr == pytest.approx(4.775))
